@@ -1,12 +1,13 @@
-from flask import Flask,render_template,redirect,jsonify,json,request
+from flask import Flask,json,request
 import datetime
+import db
 app = Flask(__name__)
 
 @app.route('/api/services',methods = ['GET'])
 def get_services():
-    data = ['service1','service2']
+    data = db.query("SELECT * FROM services")
     return json.dumps({
-        "services":data,
+        "services":json.dumps(data),
         "length":len(data),
         "last_updated":datetime.datetime.now()
         })
@@ -14,7 +15,8 @@ def get_services():
 
 @app.route('/api/services', methods = ['POST'])
 def add_services():
-    data = json.loads(request.json)['services']
+    data = request.json['services']
+    db.query(f"INSERT INTO services (name) VALUES({tuple(data)})")
     return json.dumps({
         "status":'ok',
         "length":len(data)

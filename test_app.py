@@ -1,4 +1,4 @@
-from app import get_services,add_services
+from app import get_services
 import json,requests
 def test_get_services():
     services = json.loads(get_services())["services"]

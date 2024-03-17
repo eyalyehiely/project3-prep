@@ -7,7 +7,6 @@ def query(sql):
             user="postgres",
             password="postgres",
             port="5432") as conn:
-                
                 cur=conn.cursor()
                 cur.execute(sql)
                 try:
@@ -20,7 +19,7 @@ def query(sql):
 
 
 def setup():
-    query("CREATE TABLE IF NOT EXISTS services (id INT PRIMARY KEY, name TEXT)")
+    query("CREATE TABLE IF NOT EXISTS services (id SERIAL PRIMARY KEY, name TEXT)")
 
 
 
